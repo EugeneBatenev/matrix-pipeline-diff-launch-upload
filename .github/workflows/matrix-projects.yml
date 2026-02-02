@@ -23,16 +23,16 @@ jobs:
         include:
         - ENVIRONMENT_NAME: PROD
           MODULE_NAME: FIN
-          PROJECT_ID: 14335
+          PROJECT_ID: 11778
         - ENVIRONMENT_NAME: PROD
           MODULE_NAME: MNS
-          PROJECT_ID: 14335
+          PROJECT_ID: 11778
         - ENVIRONMENT_NAME: PROD
           MODULE_NAME: PRO
-          PROJECT_ID: 14336
+          PROJECT_ID: 11779
         - ENVIRONMENT_NAME: PROD
           MODULE_NAME: RND
-          PROJECT_ID: 14336
+          PROJECT_ID: 11779
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v4
@@ -46,8 +46,8 @@ jobs:
         uses: allure-framework/setup-allurectl@v1
         with:
           allure-endpoint: https://testing.testops.cloud
-          allure-token: ${{ secrets.ALLURE_TOKEN_TESTING }}
-          allure-project-id: 14335
+          allure-token: ${{ secrets.ALLURE_TOKEN }}
+          allure-project-id: 11778
       - name: Run pytest tests
         run: |
           echo "$(printenv)"
