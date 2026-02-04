@@ -1,4 +1,4 @@
-name: matrix to different projects
+name: matrix to one projects
 
 on:
   workflow_dispatch:
