@@ -21,18 +21,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - ENVIRONMENT_NAME: PROD
+        - ENVIRONMENT_NAME: CLIENT1
           MODULE_NAME: FIN
-          PROJECT_ID: 11778
-        - ENVIRONMENT_NAME: PROD
+        - ENVIRONMENT_NAME: CLIENT1
           MODULE_NAME: MNS
-          PROJECT_ID: 11778
-        - ENVIRONMENT_NAME: PROD
+        - ENVIRONMENT_NAME: CLIENT2
           MODULE_NAME: PRO
-          PROJECT_ID: 11779
-        - ENVIRONMENT_NAME: PROD
+        - ENVIRONMENT_NAME: CLIENT2
           MODULE_NAME: RND
-          PROJECT_ID: 11779
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v4
@@ -52,9 +48,9 @@ jobs:
         run: |
           echo "$(printenv)"
           echo "Run ID: ${{ github.run_id }}"
-          export JOB_RUN_UID="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/${{ matrix.PROJECT_ID }}"
+          export JOB_RUN_UID="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/${{ matrix.ENVIRONMENT_NAME }}"
           echo "JOB_RUN_UID=${JOB_RUN_UID}"
-          allurectl watch --project-id=${{ matrix.PROJECT_ID }} --job-run-uid=${JOB_RUN_UID} -- pytest --alluredir=${ALLURE_RESULTS}
+          allurectl watch --job-run-uid=${JOB_RUN_UID} -- pytest --alluredir=${ALLURE_RESULTS}
         env:
           ALLURE_TESTPLAN_PATH: "./testplan.json"
           ALLURE_RESULTS: "allure-results"
