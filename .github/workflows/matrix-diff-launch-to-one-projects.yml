@@ -1,0 +1,60 @@
+name: matrix to one projects
+
+on:
+  workflow_dispatch:
+    inputs:
+      ALLURE_JOB_RUN_ID:
+        description: "ALLURE_JOB_RUN_ID service parameter. Leave blank."
+        required: false
+      ALLURE_USERNAME:
+        description: "ALLURE_USERNAME service parameter. Leave blank"
+        required: false
+
+env:
+  ALLURE_RESULTS: "allure-results"
+  ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+
+jobs:
+  matrix-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - ENVIRONMENT_NAME: CLIENT1
+          MODULE_NAME: FIN
+        - ENVIRONMENT_NAME: CLIENT1
+          MODULE_NAME: MNS
+        - ENVIRONMENT_NAME: CLIENT2
+          MODULE_NAME: PRO
+        - ENVIRONMENT_NAME: CLIENT2
+          MODULE_NAME: RND
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install allure-pytest pytest      
+      - name: install and configure allurectl
+        uses: allure-framework/setup-allurectl@v1
+        with:
+          allure-endpoint: https://testing.testops.cloud
+          allure-token: ${{ secrets.ALLURE_TOKEN }}
+          allure-project-id: 11778
+      - name: Run pytest tests
+        run: |
+          echo "$(printenv)"
+          echo "Run ID: ${{ github.run_id }}"
+          export JOB_RUN_UID="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/${{ matrix.ENVIRONMENT_NAME }}"
+          echo "JOB_RUN_UID=${JOB_RUN_UID}"
+          allurectl watch --job-run-uid=${JOB_RUN_UID} --launch-name="${{ matrix.ENVIRONMENT_NAME }}${{ matrix.MODULE_NAME }}" -- pytest --alluredir=${ALLURE_RESULTS}
+        env:
+          ALLURE_TESTPLAN_PATH: "./testplan.json"
+          ALLURE_RESULTS: "allure-results"
+          ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+          MODULE_NAME: ${{ matrix.MODULE_NAME }}
+          ENVIRONMENT_NAME: ${{ matrix.ENVIRONMENT_NAME }}
+  
