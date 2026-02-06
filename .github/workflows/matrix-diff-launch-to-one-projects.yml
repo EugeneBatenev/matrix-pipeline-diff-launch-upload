@@ -49,8 +49,6 @@ jobs:
         run: |
           echo "Run ID: ${{ github.run_id }}"
           export JOB_RUN_UID="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/${{ matrix.ENVIRONMENT_NAME }}"
-          echo "JOB_RUN_UID=${JOB_RUN_UID}"
-          echo "=========="
           allurectl watch --job-run-uid=${JOB_RUN_UID} --launch-name="${{ matrix.ENVIRONMENT_NAME }}${{ matrix.MODULE_NAME }}" -- pytest --alluredir=${ALLURE_RESULTS}
           echo "=========="
           eval "$(allurectl job-run env)"
