@@ -46,7 +46,7 @@ jobs:
           allure-project-id: 11778
       - name: Run pytest tests
         run: |
-          # echo "$(printenv)"
+        
           echo "Run ID: ${{ github.run_id }}"
           export JOB_RUN_UID="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/${{ matrix.ENVIRONMENT_NAME }}"
           echo "JOB_RUN_UID=${JOB_RUN_UID}"
@@ -54,7 +54,6 @@ jobs:
           # if [ "${{ github.run_attempt }}" = "1" ]; then
           allurectl watch --job-run-uid=${JOB_RUN_UID} --launch-name="${{ matrix.ENVIRONMENT_NAME }}${{ matrix.MODULE_NAME }}" -- pytest --alluredir=${ALLURE_RESULTS}
           eval "$(allurectl job-run env)"
-
           echo "LAUNCH_ID=${ALLURE_LAUNCH_ID}"
           # echo "ALLURE_LAUNCH_ID=${ALLURE_LAUNCH_ID}" >> "$GITHUB_ENV"
         env:
