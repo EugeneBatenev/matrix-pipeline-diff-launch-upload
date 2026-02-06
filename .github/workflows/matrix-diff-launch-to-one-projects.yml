@@ -50,12 +50,12 @@ jobs:
           echo "Run ID: ${{ github.run_id }}"
           export JOB_RUN_UID="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/${{ matrix.ENVIRONMENT_NAME }}"
           echo "JOB_RUN_UID=${JOB_RUN_UID}"
-          printenv grep | ALLURE_
+          printenv | grep ALLURE_.
           echo "=================="
           # if [ "${{ github.run_attempt }}" = "1" ]; then
           allurectl watch --job-run-uid=${JOB_RUN_UID} --launch-name="${{ matrix.ENVIRONMENT_NAME }}${{ matrix.MODULE_NAME }}" -- pytest --alluredir=${ALLURE_RESULTS}
           echo "=================="
-          printenv grep | ALLURE_
+          printenv | grep ALLURE_.
         env:
           ALLURE_TESTPLAN_PATH: "./testplan.json"
           ALLURE_RESULTS: "allure-results"
