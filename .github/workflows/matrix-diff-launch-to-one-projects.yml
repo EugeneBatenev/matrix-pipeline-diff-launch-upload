@@ -22,13 +22,13 @@ jobs:
       matrix:
         include:
         - ENVIRONMENT_NAME: CLIENT1
-          MODULE_NAME: FIN
+          MODULE_NAME: BlackMetal
         - ENVIRONMENT_NAME: CLIENT1
-          MODULE_NAME: MNS
+          MODULE_NAME: DeathMetal
         - ENVIRONMENT_NAME: CLIENT2
-          MODULE_NAME: PRO
+          MODULE_NAME: DoomMetal
         - ENVIRONMENT_NAME: CLIENT2
-          MODULE_NAME: RND
+          MODULE_NAME: CrustMetal
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v4
