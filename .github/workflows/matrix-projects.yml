@@ -21,17 +21,17 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - ENVIRONMENT_NAME: PROD
-          MODULE_NAME: FIN
+        - ENVIRONMENT_NAME: CLIENT1
+          MODULE_NAME: BlackMetal
           PROJECT_ID: 11778
-        - ENVIRONMENT_NAME: PROD
-          MODULE_NAME: MNS
+        - ENVIRONMENT_NAME: CLIENT1
+          MODULE_NAME: DeathMetal
           PROJECT_ID: 11778
-        - ENVIRONMENT_NAME: PROD
-          MODULE_NAME: PRO
+        - ENVIRONMENT_NAME: CLIENT2
+          MODULE_NAME: DoomMetal
           PROJECT_ID: 11779
-        - ENVIRONMENT_NAME: PROD
-          MODULE_NAME: RND
+        - ENVIRONMENT_NAME: CLIENT2
+          MODULE_NAME: CrustMetal
           PROJECT_ID: 11779
     steps:
       - uses: actions/checkout@v2
